@@ -45,7 +45,7 @@ public:
 	//destructor
 	~Hrana();
 
-	//function:
+	//function
 	double calculeazaDiscount();
 
 };
@@ -53,7 +53,7 @@ public:
 // constructorul fara parametrii
 Hrana::Hrana()
 {
-	//cout << "Constructor gol hrana:\n";
+	//cout << "Constructor fara parametrii pentru hrana:\n";
 	this->nume = "Anonim";
 	this->pret = 0;
 	this->tipAnimal = "Anonim";
@@ -63,7 +63,7 @@ Hrana::Hrana()
 // constructorul cu toti parametrii
 Hrana::Hrana(string nume, double pret, string tipAnimal, bool estePtProblemeSpeciale)
 {
-	//cout << "Constructor cu toti parametrii hrana:\n";
+	//cout << "Constructor cu toti parametrii pentru hrana:\n";
 	this->nume = nume;
 	this->pret = pret;
 	this->tipAnimal = tipAnimal;
@@ -118,7 +118,7 @@ istream& operator>>(istream& in, Hrana& h)
 // destructor
 Hrana::~Hrana()
 {
-	cout << "\nDistruge hrana: ";
+	cout << "\nDistruge hrana:";
 	cout << this->nume << endl;
 }
 
@@ -153,51 +153,365 @@ public:
 	HranaUscata(const HranaUscata& other);
 
 	//overload operator=
-	//HranaUscata& operator=(const HranaUscata& other);
-
+	HranaUscata& operator=(const HranaUscata& other);
 
 	//overload operator<<
 	friend ostream& operator<<(ostream& out, const HranaUscata& hu);
 
+	//overload operator>>
+	friend istream& operator>>(istream& in, HranaUscata& hu);
+
 	//destructor
+	~HranaUscata();
+
+	//function
+	double calculeazaDiscount();
 };
 
+//constructor fara parametrii
 HranaUscata::HranaUscata() :Hrana()
 {
-	//cout << "Constructor gol hr uscata:\n";
+	//cout << "Constructor fara parametrii pentru hrana uscata:\n";
 	this->grame = 0;
 }
 
+//constructor cu toti parametrii
 HranaUscata::HranaUscata(string nume, double pret, string tipAnimal, bool estePtProblemeSpeciale, int grame) : Hrana(nume, pret, tipAnimal, estePtProblemeSpeciale)
 {
-	//cout << "Constructor cu toti parametrii hr uscata:\n";
+	//cout << "Constructor cu toti parametrii pentru hrana uscata:\n";
 	this->grame = grame;
 }
 
-ostream& operator<<(ostream& out, const HranaUscata& hu)
-{
-	out << (const Hrana&)hu;
-	out << "\nGrame: " << hu.grame;
-	return out;
-}
-
-HranaUscata::HranaUscata(const HranaUscata& other):Hrana(other)
+//copy constructor
+HranaUscata::HranaUscata(const HranaUscata& other) :Hrana(other)
 {
 	this->grame = other.grame;
 }
 
-//HranaUscata& HranaUscata :: operator=(const HranaUscata& other)
-//{
-//	cout << "petru\n";
-//	if (this != &other)
-//	{
-//		HranaUscata
-//		(Hrana)*this = (Hrana&)other;
-//		this->grame = other.grame;
-//
-//	}
-//	return *this;
-//}
+//overload operator=
+HranaUscata& HranaUscata :: operator=(const HranaUscata& other)
+{
+	if (this != &other)
+	{
+		Hrana::operator=(other);   //(Hrana&)(*this) = other;
+		this->grame = other.grame;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const HranaUscata& hu)
+{
+	out << (const Hrana&)hu;
+	out << "\nGrame: " << hu.grame << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, HranaUscata& hu)
+{
+	in >> (Hrana&)hu;
+	cout << "\nGrame: ";
+	in >> hu.grame;
+	cout << endl;
+	return in;
+}
+
+//destructor
+HranaUscata::~HranaUscata()
+{
+	cout << "\nDistruge hrana uscata " << endl;
+}
+
+//function: 
+double HranaUscata::calculeazaDiscount()
+{
+	double discountTotal = 0; // se calculeaza la totalul de grame, NU pe suta de grame
+	
+	if (this->grame >= 500 && this->grame < 1500)
+		discountTotal = 15 * 0.01 * this->getPret();
+	else
+		if (this->grame >= 1500)
+			discountTotal = 25 * 0.01 * this->getPret();
+	
+	if (((Hrana)*this).calculeazaDiscount() == 0)
+		return discountTotal;
+	else
+		return discountTotal + ((Hrana)*this).calculeazaDiscount();
+	
+}
+
+class HranaUmeda : public Hrana
+{
+private:
+	int nrPlicuri;
+
+public:
+	//setter
+	void setNrPlicuri(int nrPlicuri) { this->nrPlicuri = nrPlicuri; }
+
+	//getter
+	int getNrPlicuri() { return this->nrPlicuri; }
+
+	//constructor fara parametrii
+	HranaUmeda();
+
+	//constructor cu toti parametrii
+	HranaUmeda(string nume, double pret, string tipAnimal, bool estePtProblemeSpeciale, int nrPlicuri);
+
+	//copy constructor
+	HranaUmeda(const HranaUmeda& other);
+
+	//overload operator=
+	HranaUmeda& operator=(const HranaUmeda& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const HranaUmeda& hu);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, HranaUmeda& hu);
+
+	//destructor
+	~HranaUmeda();
+
+	//function
+	double calculeazaDiscount();
+};
+
+//constructor fara parametrii
+HranaUmeda::HranaUmeda() :Hrana()
+{
+	//cout<<"\nConstructor fara parametrii pentru hrana umeda";
+	this->nrPlicuri = 0;
+}
+
+//constructor cu toti parametrii
+HranaUmeda::HranaUmeda(string nume, double pret, string tipAnimal, bool estePtProblemeSpeciale, int nrPlicuri) :Hrana(nume, pret, tipAnimal, estePtProblemeSpeciale)
+{
+	//cout << "Constructor cu toti parametrii pentru hrana umeda:\n";
+	this->nrPlicuri = nrPlicuri;
+}
+
+//copy constructor
+HranaUmeda::HranaUmeda(const HranaUmeda& other) :Hrana(other)
+{
+	this->nrPlicuri = other.nrPlicuri;
+}
+
+//overload operator=
+HranaUmeda& HranaUmeda :: operator=(const HranaUmeda& other)
+{
+	if (this != &other)
+	{
+		Hrana::operator=(other);
+		this->nrPlicuri = other.nrPlicuri;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const HranaUmeda& hu)
+{
+	out << (const Hrana&)hu;
+	out << "\nNumar plicuri: " << hu.nrPlicuri << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, HranaUmeda& hu)
+{
+	in >> (Hrana&)hu;
+	cout << "\nNumar plicuri: ";
+	in >> hu.nrPlicuri;
+	cout << endl;
+	return in;
+}
+
+//destructor
+HranaUmeda::~HranaUmeda()
+{
+	cout << "\nDistruge hrana umeda " << endl;
+}
+
+//function
+double HranaUmeda::calculeazaDiscount()
+{
+	double discountPerPlic = 0; 
+	double discountTotal = 0;
+
+	if (this->nrPlicuri >= 15 && this->nrPlicuri < 35)
+		discountPerPlic = 10 * 0.01 * this->getPret();
+	else
+		if (this->nrPlicuri >= 35)
+			discountPerPlic = 20 * 0.01 * this->getPret();
+
+	discountTotal = discountPerPlic * this->nrPlicuri;
+
+	if (((Hrana)*this).calculeazaDiscount() == 0)
+		return discountTotal;
+	else
+		return discountTotal + ((Hrana)*this).calculeazaDiscount();
+}
+
+class Animal
+{
+private:
+	string nume;
+	char sex;
+	int varsta;
+	double greutate;
+	double pret;
+	bool areProblemeSpeciale;
+
+public:
+	//setters
+	void setNume(string nume) { this->nume = nume; }
+	void setSex(char sex) { this->sex = sex; }
+	void setVarsta(int varsta) { this->varsta = varsta; }
+	void setGreutate(double greutate) { this->greutate = greutate; }
+	void setPret(double pret) { this->pret = pret; }
+	void setAreProblemeSpeciale(bool areProblemeSpeciale) { this->areProblemeSpeciale = areProblemeSpeciale; }
+
+	//getters
+	string getNume() { return this->nume; }
+	char getSex() { return this->sex; }
+	int getVarsta() { return this->varsta; }
+	double getGreutate() { return this->greutate; }
+	double getPret() { return this->pret; }
+	bool getAreProblemeSpeciale() { return this->areProblemeSpeciale; }
+
+	//constructor fara parametrii
+	Animal();
+
+	//costructor cu toti parametrii
+	Animal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale);
+
+	//copy constructor
+	Animal(const Animal& other);
+
+	//overload operator=
+	Animal& operator=(const Animal& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Animal& a);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, Animal& a);
+
+	//destructor
+	~Animal();
+
+	//function
+};
+
+//constructor fara parametrii
+Animal::Animal()
+{
+	//cout << "Constructor fara parametrii pentru animal:\n";
+	this->nume = "Anonim";
+	this->sex = '-';
+	this->varsta = 0;
+	this->greutate = 0;
+	this->pret = 0;
+	this->areProblemeSpeciale = false;
+}
+
+//constructor cu toti parametrii
+Animal::Animal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale)
+{
+	//cout << "Constructor cu toti parametrii pentru animal:\n";
+	this->nume = nume;
+	this->sex = sex;
+	this->varsta = varsta;
+	this->greutate = greutate;
+	this->pret = pret;
+	this->areProblemeSpeciale = areProblemeSpeciale;
+}
+
+//copy constructor
+Animal::Animal(const Animal& other)
+{
+	this->nume = other.nume;
+	this->sex = other.sex;
+	this->varsta = other.varsta;
+	this->greutate = other.greutate;
+	this->pret = other.pret;
+	this->areProblemeSpeciale = other.areProblemeSpeciale;
+}
+
+//overload operator=
+Animal& Animal::operator=(const Animal& other)
+{
+	if (this != &other)
+	{
+		this->nume = other.nume;
+		this->sex = other.sex;
+		this->varsta = other.varsta;
+		this->greutate = other.greutate;
+		this->pret = other.pret;
+		this->areProblemeSpeciale = other.areProblemeSpeciale;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Animal& a)
+{
+	out << "\nNume: " << a.nume;
+	out << "\nSex: " << a.sex;
+	out << "\nVarsta: " << a.varsta;
+	out << "\nGreutate: " << a.greutate;
+	out << "\nPret: " << a.pret;
+	out << "\nAre probleme speciale: " << a.areProblemeSpeciale;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Animal& a)
+{
+	cout << "\nNume: ";
+	in >> a.nume;
+	cout << "\nSex: ";
+	in >> a.sex;
+	cout << "\nVarsta: ";
+	in >> a.varsta;
+	cout << "\nGreutate: ";
+	in >> a.greutate;
+	cout << "\nPret: ";
+	in >> a.pret;
+	cout << "\nAre probleme speciale: ";
+	in>> a.areProblemeSpeciale;
+	return in;
+}
+
+//destructor
+Animal::~Animal()
+{
+	cout << "\nDistruge animalul: ";
+	cout << this->nume << endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -206,12 +520,23 @@ int main()
 	/*Hrana h("BritCare",35,"pisica", true);
 	cout << h.calculeazaDiscount();*/
 
-	HranaUscata hu("BritCare",34.99,"pisica",false,300);
-	//cout << hu;
+	//HranaUscata hu("BritCare",2.66,"pisica",false,300);
+	////cout << hu;
+	////cout << endl;
+	//HranaUscata hu1;
+	//hu1 = hu;
+	//cout << hu1;
+	
+	//HranaUscata hu2("BritCare", 2.66, "pisica", true, 600);
+	//cout <<hu2.calculeazaDiscount();
 	//cout << endl;
-	HranaUscata hu1;
-	hu1 = hu;
-	cout << hu1;
+	//cout <<((Hrana) hu2).calculeazaDiscount();  // cout << hu2.Hrana::calculeazaDiscount();
+
+	/*HranaUmeda hum3("Pedigree", 1.99, "caine", true, 35);
+	cout << hum3.calculeazaDiscount();
+	cout << endl;
+	cout << hum3.Hrana::calculeazaDiscount();*/
+
 
 
 	
