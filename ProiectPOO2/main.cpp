@@ -402,6 +402,7 @@ public:
 	~Animal();
 
 	//function
+	virtual bool verificaObezitate() = 0;
 };
 
 //constructor fara parametrii
@@ -491,21 +492,258 @@ Animal::~Animal()
 	cout << this->nume << endl;
 }
 
+class Pisica : public Animal
+{
+private:
+	bool areGheareTaiate;
 
+public:
+	//setter
+	void setAreGheareTaiate(bool areGheareTaiate) { this->areGheareTaiate = areGheareTaiate; }
 
+	//getter
+	bool getAreGheareTaiate() { return this->areGheareTaiate; }
 
+	//constructor fara parametrii
+	Pisica();
 
+	//constructor cu toti parametrii
+	Pisica(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool areGheareTaiate);
 
+	//copy constructor
+	Pisica(const Pisica& other);
 
+	//overload operator=
+	Pisica& operator=(const Pisica& other);
 
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Pisica& p);
 
+	//overload operator>>
+	friend istream& operator>>(istream& in, Pisica& p);
 
+	//destructor
+	~Pisica();
 
+	//function
+	bool verificaObezitate();
 
+};
 
+//constructor fara parametrii
+Pisica::Pisica() :Animal()
+{
+	//cout << "Constructor fara parametrii pentru pisica:\n";
+	this->areGheareTaiate = false;
 
+}
 
+//constructor cu toti parametrii
+Pisica::Pisica(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool areGheareTaiate) 
+	   :Animal(nume, sex, varsta, greutate, pret, areProblemeSpeciale)
+{
+	this->areGheareTaiate = areGheareTaiate;
+}
 
+//copy constructor
+Pisica::Pisica(const Pisica& other) : Animal(other)
+{
+	this->areGheareTaiate = other.areGheareTaiate;
+}
+
+//overload operator=
+Pisica& Pisica :: operator=(const Pisica& other)
+{
+	if (this != &other)
+	{
+		Animal::operator=(other);
+		this->areGheareTaiate = other.areGheareTaiate;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Pisica& p)
+{
+	out << (const Animal&)p;
+	out << "\nAre gheaare taiate: " << p.areGheareTaiate << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Pisica& p)
+{
+	in >> (Animal&)p;
+	cout << "\nAre gheare taiate: ";
+	in >> p.areGheareTaiate;
+	cout << endl;
+	return in;
+}
+
+//destructor
+Pisica::~Pisica()
+{
+	cout << "\nDistruge pisica:" << endl;
+}
+
+//function 
+bool Pisica::verificaObezitate()
+{
+	bool obezitatePisica = false;
+	int criteriuObezitatePisica;
+	if (this->getVarsta() < 2)
+		criteriuObezitatePisica = 7;
+	else
+	{
+		if (this->getVarsta() >= 2 && this->getVarsta() <= 10)
+			criteriuObezitatePisica = 12;
+		else
+			criteriuObezitatePisica = 10;
+	}
+
+	if (this->getGreutate() >= criteriuObezitatePisica)
+	{
+		this->setAreProblemeSpeciale(true);
+		obezitatePisica  = true;
+	}
+
+	return obezitatePisica;
+}
+
+class Caine :public Animal
+{
+private:
+	bool esteDresat;
+
+public:
+	//setter
+	void setEsteDresat(bool esteDresat) { this->esteDresat = esteDresat; }
+
+	//getter
+	bool getEsteDresat() { return this->esteDresat; }
+
+	//constructor fara parametrii
+	Caine();
+
+	//constructor cu toti parametrii
+	Caine(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool esteDresat);
+
+	//copy constructor
+	Caine(const Caine& other);
+
+	//overload operator=
+	Caine& operator=(const Caine& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Caine& c);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, Caine& c);
+
+	//destructor
+	~Caine();
+
+	//function
+	bool verificaObezitate();
+};
+
+//constructor fara parametrii
+Caine::Caine():Animal()
+{
+	this->esteDresat = false;
+}
+
+//constructor cu toti parametrii
+Caine::Caine(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool esteDresat)
+	:Animal(nume, sex, varsta, greutate, pret, areProblemeSpeciale)
+{
+	this->esteDresat = esteDresat;
+}
+
+//copy constructor
+Caine::Caine(const Caine& other) :Animal(other)
+{
+	this->esteDresat = other.esteDresat;
+}
+
+//overload operator=
+Caine& Caine::operator=(const Caine& other)
+{
+	if (this != &other)
+	{
+		Animal::operator=(other);
+		this->esteDresat = other.esteDresat;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Caine& c)
+{
+	out << (const Animal&)c;
+	out << "\nEste dresat: " << c.esteDresat << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Caine& c)
+{
+	in >> (Animal&)c;
+	cout << "\nEste dresat: ";
+	in >> c.esteDresat;
+	cout << endl;
+	return in;
+}
+
+//destructor
+Caine::~Caine()
+{
+	cout << "\nDistruge caine " << endl;
+}
+
+//function
+bool Caine::verificaObezitate()
+{
+	bool obezitateCaine = false;
+	int criteriuObezitateCaine;
+	if (this->getVarsta() < 2)
+		criteriuObezitateCaine = 25;
+	else
+	{
+		if (this->getVarsta() >= 2 && this->getVarsta() <= 10)
+			criteriuObezitateCaine = 35;
+		else
+			criteriuObezitateCaine = 30;
+	}
+
+	if (this->getGreutate() >= criteriuObezitateCaine)
+	{
+		this->setAreProblemeSpeciale(true);
+		obezitateCaine = true;
+	}
+
+	return obezitateCaine;
+}
+
+class Cal :public Animal
+{
+private:
+	bool arePotcoave;
+
+public:
+	//setter
+	void setArePotcoave(bool arePotcoave) { this->arePotcoave = arePotcoave; }
+
+	//getter
+	bool getArePotcoave() { return this->arePotcoave; }
+
+	//constructor fara parametrii
+	Cal();
+
+	//constructor cu toti parametrii
+	Cal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool arePotcoave);
+
+};
 
 
 
