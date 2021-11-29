@@ -743,8 +743,125 @@ public:
 	//constructor cu toti parametrii
 	Cal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool arePotcoave);
 
+	//copy constructor
+	Cal(const Cal& other);
+
+	//overload operator=
+	Cal& operator=(const Cal& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Cal& c);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, Cal& c);
+
+	//destructor
+	~Cal();
+
+	//function
+	bool verificaObezitate();
 };
 
+//constructor fara parametrii
+Cal::Cal() :Animal()
+{
+	this->arePotcoave = false;
+}
+
+//constructor cu toti parametrii
+Cal::Cal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool arePotcoave)
+	:Animal(nume, sex, varsta, greutate, pret, areProblemeSpeciale)
+{
+	this->arePotcoave = arePotcoave;
+}
+
+//copy constructor
+Cal::Cal(const Cal& other) :Animal(other)
+{
+	this->arePotcoave = other.arePotcoave;
+}
+
+//overload operator=
+Cal& Cal::operator=(const Cal& other)
+{
+	if (this != &other)
+	{
+		Animal::operator=(other);
+		this->arePotcoave = other.arePotcoave;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Cal& c)
+{
+	out << (const Animal&)c;
+	out << "\nAre potcoave: " << c.arePotcoave << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Cal& c)
+{
+	in >> (Animal&)c;
+	cout << "\nAre potcoave: ";
+	in >> c.arePotcoave;
+	cout << endl;
+	return in;
+}
+
+//destructor
+Cal::~Cal()
+{
+	cout << "\nDistruge cal " << endl;
+}
+
+//function
+bool Cal::verificaObezitate()
+{
+	bool obezitateCal = false;
+	int criteriuObezitateCal;
+	if (this->getVarsta() < 2)
+		criteriuObezitateCal = 150;
+	else
+	{
+		if (this->getVarsta() >= 2 && this->getVarsta() <= 10)
+			criteriuObezitateCal = 500;
+		else
+			criteriuObezitateCal = 450;
+	}
+
+	if (this->getGreutate() >= criteriuObezitateCal)
+	{
+		this->setAreProblemeSpeciale(true);
+		obezitateCal = true;
+	}
+
+	return obezitateCal;
+}
+
+class Client
+{
+private:
+	string numePrenume;
+	char sex;
+	double rating;
+	int animaleDetinute;
+
+public:
+	//setters
+	void setNumePrenume(string numePrenume) { this->numePrenume = numePrenume; }
+	void setSex(char sex) { this->sex = sex; }
+	void setRating(double rating) { this->rating = rating; }
+	void setAnimaleDetinute(int animaleDetinute) { this->animaleDetinute = animaleDetinute; }
+
+	//getters
+	string getNumePrenume() { return this->numePrenume; }
+	char getSex() { return this->sex; }
+	double getRating() { return this->rating; }
+	int getAnimaleDetinute() { return this->animaleDetinute; }
+
+};
 
 
 
