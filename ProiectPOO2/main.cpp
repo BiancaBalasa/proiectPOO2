@@ -861,7 +861,229 @@ public:
 	double getRating() { return this->rating; }
 	int getAnimaleDetinute() { return this->animaleDetinute; }
 
+	//costructor fara parametrii
+	Client();
+
+	//constructor cu toti parametrii
+	Client(string numePrenume, char sex, double rating, int animaleDetinute);
+
+	//copy constructor
+	Client(const Client& other);
+
+	//overload operator=
+	Client& operator=(const Client& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Client& c);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, Client& c);
+
+	//destructor
+	~Client();
+
+	//function 
+	bool poateAdopta(Animal& a);
 };
+
+//constructor fara parametrii
+Client::Client()
+{
+	this->numePrenume = "Anonim";
+	this->sex = '-';
+	this->rating = 0;
+	this->animaleDetinute = 0;
+}
+
+//constructor cu toti parametrii
+Client::Client(string numePrenume, char sex, double rating, int animaleDetinute)
+{
+	this->numePrenume = numePrenume;
+	this->sex = sex;
+	this->rating = rating;
+	this->animaleDetinute = animaleDetinute;
+}
+
+//copy constructor
+Client::Client(const Client& other)
+{
+	this->numePrenume = other.numePrenume;
+	this->sex = other.sex;
+	this->rating = other.rating;
+	this->animaleDetinute = other.animaleDetinute;
+}
+
+//overload operator=
+Client& Client::operator=(const Client& other)
+{
+	if (this != &other)
+	{
+		this->numePrenume = other.numePrenume;
+		this->sex = other.sex;
+		this->rating = other.rating;
+		this->animaleDetinute = other.animaleDetinute;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Client& c)
+{
+	out << "\nNume prenume: " << c.numePrenume;
+	out << "\nSex: " << c.sex;
+	out << "\nRating: " << c.rating;
+	out << "\nAnimale detinute: " << c.animaleDetinute;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Client& c)
+{
+	cout << "\nNume prenume: ";
+	in >> c.numePrenume;
+	cout << "\nSex: ";
+	in >> c.sex;
+	cout << "\nRating: ";
+	in >> c.rating;
+	cout << "\nAnimale detinute: ";
+	in >> c.animaleDetinute;
+	return in;
+}
+
+//destructor
+Client::~Client()
+{
+	cout << "\nDistruge client ";
+	cout << this->numePrenume << endl;
+}
+
+//function 
+bool Client::poateAdopta(Animal& a)
+{
+	bool poateAdopta = true;
+
+	if (this->rating <= 2.5 && this->animaleDetinute >= 5)
+		poateAdopta = false;
+	else
+		if (this->animaleDetinute >= 3 && a.getAreProblemeSpeciale() == true)
+			poateAdopta = false;
+
+	return poateAdopta;
+}
+
+class Adult :public Client
+{
+private:
+	int membriiCasa;
+	bool calatoresteMult;
+
+public:
+	//setters
+	void setMembriiCasa(int membriiCasa) { this->membriiCasa = membriiCasa; }
+	void setCalatoresteMult(bool calatoresteMult) { this->calatoresteMult = calatoresteMult; }
+
+	//getters
+	int getMembriiCasa() { return this->membriiCasa; }
+	bool getCalaltoresteMult() { return this->calatoresteMult; }
+
+	//constructor fara parametrii
+	Adult();
+
+	//constructor cu toti parametrii
+	Adult(string numePrenume, char sex, double rating, int animaleDetinute, int membriiCasa, bool calatoresteMult);
+
+	//copy constructor
+	Adult(const Adult& other);
+
+	//overload operator=
+	Adult& operator=(const Adult& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Adult& a);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, Adult& a);
+
+	//destructor 
+	~Adult();
+
+	//function
+	bool poateAdopta();
+};
+
+//constructor fara parametrii
+Adult::Adult() :Client()
+{
+	this->membriiCasa = 0;
+	this->calatoresteMult = false;
+}
+
+//constructor cu toti parametrii
+Adult::Adult(string numePrenume, char sex, double rating, int animaleDetinute, int membriiCasa, bool calatoresteMult)
+	:Client(numePrenume, sex, rating, animaleDetinute)
+{
+	this->membriiCasa = membriiCasa;
+	this->calatoresteMult = calatoresteMult;
+}
+
+//copy constructor
+Adult::Adult(const Adult& other) :Client(other)
+{
+	this->membriiCasa = other.membriiCasa;
+	this->calatoresteMult = other.calatoresteMult;
+}
+
+//overload operator=
+Adult& Adult::operator=(const Adult& other)
+{
+	if (this != &other)
+	{
+		Client::operator=(other);
+		this->membriiCasa = other.membriiCasa;
+		this->calatoresteMult = other.calatoresteMult;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Adult& a)
+{
+	out << (const Client&)a;
+	out << "\nMembrii casa: " << a.membriiCasa;
+	out << "\nCalatoreste mult: " << a.calatoresteMult;
+	out << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Adult& a)
+{
+	in >> (Client&)a;
+	cout << "\nMembrii casa: ";
+	in >> a.membriiCasa;
+	cout << "\nCalatoreste mult: ";
+	in >> a.calatoresteMult;
+	cout << endl;
+	return in;
+}
+
+//destructor
+Adult::~Adult()
+{
+	cout << "\nDistruge adult " << endl;
+}
+
+//function
+bool Adult::poateAdopta()
+{
+	
+}
+
+
+
+
+
+
 
 
 
@@ -891,6 +1113,10 @@ int main()
 	cout << hum3.calculeazaDiscount();
 	cout << endl;
 	cout << hum3.Hrana::calculeazaDiscount();*/
+	Client c;
+	Pisica p;
+
+	cout<<c.poateAdopta(p);
 
 
 
