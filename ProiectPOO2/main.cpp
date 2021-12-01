@@ -1008,7 +1008,7 @@ public:
 	~Adult();
 
 	//function
-	bool poateAdopta();
+	bool poateAdoptaAdultul(Animal& a);
 };
 
 //constructor fara parametrii
@@ -1074,10 +1074,132 @@ Adult::~Adult()
 }
 
 //function
-bool Adult::poateAdopta()
+bool Adult::poateAdoptaAdultul(Animal& a)
 {
+	bool poateAdopta = true;
+
+	if (this->calatoresteMult == true && this->membriiCasa == 1)
+		poateAdopta = false;
 	
+	if (poateAdopta == true && this->poateAdopta(a) == true)
+		return true;
+	else
+		return false;
 }
+
+class Pensionar : public Client
+{
+private:
+	bool areProblemeSanatate;
+
+public:
+	//setter
+	void setAreProblemeSanatate(bool areProblemeSanatate) { this->areProblemeSanatate = areProblemeSanatate; }
+
+	//getter
+	bool getAreProblemeSanatate() { return this->areProblemeSanatate; }
+
+	//constructor fara parametrii
+	Pensionar();
+
+	//constructor cu toti parametrii
+	Pensionar(string numePrenume, char sex, double rating, int animaleDetinute, bool areProblemeSanatate);
+
+	//copy constructor
+	Pensionar(const Pensionar& other);
+
+	//overload operator=
+	Pensionar& operator=(const Pensionar& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const Pensionar& p);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, Pensionar& p);
+
+	//destructor
+	~Pensionar();
+
+	//function
+	bool poateAdoptaPensionarul(Animal& a);
+
+};
+
+//constructor fara parametrii
+Pensionar::Pensionar() :Client()
+{
+	this->areProblemeSanatate = false;
+}
+
+//constructor cu toti parametrii
+Pensionar::Pensionar(string numePrenume, char sex, double rating, int animaleDetinute, bool areProblemeSanatate)
+	: Client(numePrenume, sex, rating, animaleDetinute)
+{
+	this->areProblemeSanatate = areProblemeSanatate;
+}
+
+//copy constructor
+Pensionar::Pensionar(const Pensionar& other) :Client(other)
+{
+	this->areProblemeSanatate = other.areProblemeSanatate;
+}
+
+//overload operator=
+Pensionar& Pensionar::operator=(const Pensionar& other)
+{
+	if (this != &other)
+	{
+		Client::operator=(other);
+		this->areProblemeSanatate = other.areProblemeSanatate;
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const Pensionar& p)
+{
+	out << (const Client&)p;
+	out << "\nAre probleme de sanatate: " << p.areProblemeSanatate;
+	out << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, Pensionar& p)
+{
+	in >> (Client&)p;
+	cout << "\nAre probleme de sanatate: ";
+	in >> p.areProblemeSanatate;
+	cout << endl;
+	return in;
+}
+
+//destructor
+Pensionar::~Pensionar()
+{
+	cout << "\nDistruge pensionarul: ";
+	cout << endl;
+}
+
+//function
+bool Pensionar::poateAdoptaPensionarul(Animal& a)
+{
+	bool poateAdopta = true;
+
+	if (this->areProblemeSanatate == true && a.getAreProblemeSpeciale() == true)
+		poateAdopta = false;
+	
+	if (poateAdopta == true && this->poateAdopta(a) == true)
+		return true;
+	else
+		return false;
+}
+
+
+
+
+
+
 
 
 
@@ -1113,10 +1235,20 @@ int main()
 	cout << hum3.calculeazaDiscount();
 	cout << endl;
 	cout << hum3.Hrana::calculeazaDiscount();*/
-	Client c;
+	/*Client c;
 	Pisica p;
 
-	cout<<c.poateAdopta(p);
+	cout<<c.poateAdopta(p);*/
+
+	Pensionar p;
+	Adult a;
+	Pisica pi("Piscotel", 'M', 1, 2.7, 355, false, true);
+	cout << p.poateAdoptaPensionarul(pi);
+	cout << endl;
+	cout << a.poateAdoptaAdultul(pi);
+	cout << endl;
+	cout << p.poateAdopta(pi);
+
 
 
 
