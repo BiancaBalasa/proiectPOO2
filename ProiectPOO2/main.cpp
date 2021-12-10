@@ -118,8 +118,8 @@ istream& operator>>(istream& in, Hrana& h)
 // destructor
 Hrana::~Hrana()
 {
-	cout << "\nDistruge hrana:";
-	cout << this->nume << endl;
+	//cout << "\nDistruge hrana:";
+	//cout << this->nume << endl;
 }
 
 //function
@@ -220,7 +220,7 @@ istream& operator>>(istream& in, HranaUscata& hu)
 //destructor
 HranaUscata::~HranaUscata()
 {
-	cout << "\nDistruge hrana uscata " << endl;
+	//cout << "\nDistruge hrana uscata " << endl;
 }
 
 //function: 
@@ -330,7 +330,7 @@ istream& operator>>(istream& in, HranaUmeda& hu)
 //destructor
 HranaUmeda::~HranaUmeda()
 {
-	cout << "\nDistruge hrana umeda " << endl;
+	//cout << "\nDistruge hrana umeda " << endl;
 }
 
 //function
@@ -464,7 +464,7 @@ istream& operator>>(istream& in, MixHrana& mh)
 //destructor
 MixHrana::~MixHrana()
 {
-	cout << "\nDistruge MixHrana " << endl;
+	//cout << "\nDistruge MixHrana " << endl;
 }
 
 //function
@@ -611,8 +611,8 @@ istream& operator>>(istream& in, Animal& a)
 //destructor
 Animal::~Animal()
 {
-	cout << "\nDistruge animalul: ";
-	cout << this->nume << endl;
+	//cout << "\nDistruge animalul: ";
+	//cout << this->nume << endl;
 }
 
 class Pisica : public Animal
@@ -706,7 +706,7 @@ istream& operator>>(istream& in, Pisica& p)
 //destructor
 Pisica::~Pisica()
 {
-	cout << "\nDistruge pisica:" << endl;
+	//cout << "\nDistruge pisica:" << endl;
 }
 
 //function 
@@ -821,7 +821,7 @@ istream& operator>>(istream& in, Caine& c)
 //destructor
 Caine::~Caine()
 {
-	cout << "\nDistruge caine " << endl;
+	//cout << "\nDistruge caine " << endl;
 }
 
 //function
@@ -846,121 +846,6 @@ bool Caine::verificaObezitate()
 	}
 
 	return obezitateCaine;
-}
-
-class Cal :public Animal
-{
-private:
-	bool arePotcoave;
-
-public:
-	//setter
-	void setArePotcoave(bool arePotcoave) { this->arePotcoave = arePotcoave; }
-
-	//getter
-	bool getArePotcoave() { return this->arePotcoave; }
-
-	//constructor fara parametrii
-	Cal();
-
-	//constructor cu toti parametrii
-	Cal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool arePotcoave);
-
-	//copy constructor
-	Cal(const Cal& other);
-
-	//overload operator=
-	Cal& operator=(const Cal& other);
-
-	//overload operator<<
-	friend ostream& operator<<(ostream& out, const Cal& c);
-
-	//overload operator>>
-	friend istream& operator>>(istream& in, Cal& c);
-
-	//destructor
-	~Cal();
-
-	//function
-	bool verificaObezitate();
-};
-
-//constructor fara parametrii
-Cal::Cal() :Animal()
-{
-	this->arePotcoave = false;
-}
-
-//constructor cu toti parametrii
-Cal::Cal(string nume, char sex, int varsta, double greutate, double pret, bool areProblemeSpeciale, bool arePotcoave)
-	:Animal(nume, sex, varsta, greutate, pret, areProblemeSpeciale)
-{
-	this->arePotcoave = arePotcoave;
-}
-
-//copy constructor
-Cal::Cal(const Cal& other) :Animal(other)
-{
-	this->arePotcoave = other.arePotcoave;
-}
-
-//overload operator=
-Cal& Cal::operator=(const Cal& other)
-{
-	if (this != &other)
-	{
-		Animal::operator=(other);
-		this->arePotcoave = other.arePotcoave;
-	}
-	return *this;
-}
-
-//overload operator<<
-ostream& operator<<(ostream& out, const Cal& c)
-{
-	out << (const Animal&)c;
-	out << "\nAre potcoave: " << c.arePotcoave << endl;
-	return out;
-}
-
-//overload operator>>
-istream& operator>>(istream& in, Cal& c)
-{
-	in >> (Animal&)c;
-	cout << "\nAre potcoave: ";
-	in >> c.arePotcoave;
-	cout << endl;
-	return in;
-}
-
-//destructor
-Cal::~Cal()
-{
-	cout << "\nDistruge cal " << endl;
-}
-
-//function
-bool Cal::verificaObezitate()
-{
-	bool obezitateCal = false;
-	int criteriuObezitateCal;
-	if (this->varsta < 2)
-		criteriuObezitateCal = 150;
-	else
-	{
-		if (this->varsta >= 2 && this->varsta <= 10)
-			criteriuObezitateCal = 500;
-		else
-			criteriuObezitateCal = 450;
-	}
-
-	if (this->greutate >= criteriuObezitateCal)
-	{
-		this->areProblemeSpeciale = true;
-		obezitateCal = true;
-	}
-
-	return obezitateCal;
 }
 
 class Client
@@ -1076,8 +961,8 @@ istream& operator>>(istream& in, Client& c)
 //destructor
 Client::~Client()
 {
-	cout << "\nDistruge client ";
-	cout << this->numePrenume << endl;
+	//cout << "\nDistruge client ";
+	//cout << this->numePrenume << endl;
 }
 
 //function 
@@ -1193,7 +1078,7 @@ istream& operator>>(istream& in, Adult& a)
 //destructor
 Adult::~Adult()
 {
-	cout << "\nDistruge adult " << endl;
+	//cout << "\nDistruge adult " << endl;
 }
 
 //function
@@ -1300,8 +1185,8 @@ istream& operator>>(istream& in, Pensionar& p)
 //destructor
 Pensionar::~Pensionar()
 {
-	cout << "\nDistruge pensionarul: ";
-	cout << endl;
+	//cout << "\nDistruge pensionarul: ";
+	//cout << endl;
 }
 
 //function
@@ -1320,9 +1205,390 @@ bool Pensionar::poateAdoptaPensionarul(Animal& a)
 
 int main()
 {
-	MixHrana h1;
+	Adult* listaAdulti[100];
+	Pensionar* listaPensionari[100];
+	HranaUscata* listaHranaUscata[100];
+	HranaUmeda* listaHranaUmeda[100];
+	Pisica* listaPisici[100] ;
+	Caine* listaCaini[100];
+
+	int indexListaAdulti = 0;
+	int indexListaPensionari = 0;
+	int indexListaHranaUscata = 0;
+	int indexListaHranaUmeda = 0;
+	int indexListaPisici = 0;
+	int indexListaCaini = 0;
+
+	int input = -1;
+	while (input != 0)
+	{
+		cout << "\nALEGETI OPTIUNEA: " << endl;
+		cout << " 0. Exit!\n";
+		cout << " 1. Creeaza adult\n";
+		cout << " 2. Creeaza pensionar\n";
+		cout << " 3. Creeaza hrana uscata\n";
+		cout << " 4. Creeaza hrana umeda\n";
+		cout << " 5. Creeaza pisica\n";
+		cout << " 6. Creeaza caine\n";
+		cout << " 7. Afiseaza toti adultii\n";
+		cout << " 8. Afiseaza toti pensionarii\n";
+		cout << " 9. Afiseaza toata hrana uscata\n";
+		cout << "10. Afiseaza toata hrana umeda\n";
+		cout << "11. Afiseaza toate pisicile\n";
+		cout << "12. Afiseaza toti cainii\n";
+		cout << "13. Verifica daca un adult poate adopta o pisica\n";
+		cout << "14. Verifica daca un adult poate adopta un caine\n";
+		cout << "15. Verifica daca un pensionar poate adopta o pisica\n";
+		cout << "16. Verifica daca un pensionar poate adopta un caine\n";
+		cout << "17. Calculeaza discount pentru o hrana uscata\n";
+		cout << "18. Calculeaza discount pentru o hrana umeda\n";
+		cout << "19. Verifica daca o pisica are probleme cu obezitatea\n";
+		cout << "20. Verifica daca un caine are probleme cu obezitatea\n";
+		
+
+
+		cin >> input;
+
+		switch (input)
+		{
+		case 0:
+			cout << "Iesire din program! " << endl;
+			break;
+
+		case 1:
+		{
+			listaAdulti[indexListaAdulti] = new Adult();
+			cin >> *listaAdulti[indexListaAdulti];
+			indexListaAdulti++;
+			break;
+		}
+
+		case 2:
+		{
+			listaPensionari[indexListaPensionari] = new Pensionar();
+			cin >> *listaPensionari[indexListaPensionari];
+			indexListaPensionari++;
+			break;
+		}
+
+		case 3:
+		{
+			listaHranaUscata[indexListaHranaUscata] = new HranaUscata();
+			cin >> *listaHranaUscata[indexListaHranaUscata];
+			indexListaHranaUscata++;
+			break;
+		}
+
+		case 4:
+		{
+			listaHranaUmeda[indexListaHranaUmeda] = new HranaUmeda();
+			cin >> *listaHranaUmeda[indexListaHranaUmeda];
+			indexListaHranaUmeda++;
+			break;
+		}
+
+		case 5:
+		{
+			listaPisici[indexListaPisici] = new Pisica();
+			cin >> *listaPisici[indexListaPisici];
+			indexListaPisici++;
+			break;
+		}
+
+		case 6:
+		{
+			listaCaini[indexListaCaini] = new Caine();
+			cin >> *listaCaini[indexListaCaini];
+			indexListaCaini++;
+			break;
+		}
+
+		case 7:
+		{
+			for (int i = 0; i < indexListaAdulti; i++)
+			{
+				cout << *listaAdulti[i] << endl;
+			}
+			break;
+		}
+
+		case 8:
+		{
+			for (int i = 0; i < indexListaPensionari; i++)
+			{
+				cout << *listaPensionari[i] << endl;
+			}
+			break;
+		}
+
+		case 9:
+		{
+			for (int i = 0; i < indexListaHranaUscata; i++)
+			{
+				cout << *listaHranaUscata[i] << endl;
+			}
+			break;
+		}
+
+		case 10:
+		{
+			for (int i = 0; i < indexListaHranaUmeda; i++)
+			{
+				cout << *listaHranaUmeda[i] << endl;
+			}
+			break;
+		}
+
+		case 11:
+		{
+			for (int i = 0; i < indexListaPisici; i++)
+			{
+				cout << *listaPisici[i] << endl;
+			}
+			break;
+		}
+
+		case 12:
+		{
+			for (int i = 0; i < indexListaCaini; i++)
+			{
+				cout << *listaCaini[i] << endl;
+			}
+			break;
+		}
+
+		case 13:
+		{
+			for (int i = 0; i < indexListaAdulti; i++)
+			{  
+				cout << "Index adult: " << i << endl;
+				cout << *listaAdulti[i] << endl;
+			}
+
+			for (int i = 0; i < indexListaPisici; i++)
+			{
+				cout << "Index pisica: " << i << endl;
+				cout << *listaPisici[i] << endl;
+			}
+
+			int indexAdult;
+			cout << "Indexul adultului dorit: ";
+			cin >> indexAdult;
+
+			int indexPisica;
+			cout << "Indexul pisicii dorite: ";
+			cin >> indexPisica;
+			cout << endl;
+
+			if (listaAdulti[indexAdult]->poateAdoptaAdultul(*listaPisici[indexPisica]) == true)
+				cout << " Adultul poate adopta pisica\n";
+			else
+				cout << " Adultul nu poate adopta aceasta pisica\n";
+
+			break;
+		}
+
+		case 14:
+		{
+			for (int i = 0; i < indexListaAdulti; i++)
+			{
+				cout << "Index adult: " << i << endl;
+				cout << *listaAdulti[i] << endl;
+			}
+
+			for (int i = 0; i < indexListaCaini; i++)
+			{
+				cout << "Index caine: " << i << endl;
+				cout << *listaCaini[i] << endl;
+			}
+
+			int indexAdult;
+			cout << "Indexul adultului dorit: ";
+			cin >> indexAdult;
+
+			int indexCaine;
+			cout << "Indexul cainelui dorit: ";
+			cin >> indexCaine;
+			cout << endl;
+
+			if (listaAdulti[indexAdult]->poateAdoptaAdultul(*listaPisici[indexCaine]) == true)
+				cout << " Adultul poate adopta cainele\n";
+			else
+				cout << " Adultul nu poate adopta acest caine\n";
+
+			break;
+		}
+
+		case 15:
+		{
+			for (int i = 0; i < indexListaPensionari; i++)
+			{
+				cout << "Index pensionar: " << i << endl;
+				cout << *listaPensionari[i] << endl;
+			}
+
+			for (int i = 0; i < indexListaPisici; i++)
+			{
+				cout << "Index pisica: " << i << endl;
+				cout << *listaPisici[i] << endl;
+			}
+
+			int indexPensionar;
+			cout << "Indexul pensionarului dorit: ";
+			cin >> indexPensionar;
+
+			int indexPisica;
+			cout << "Indexul pisicii dorite: ";
+			cin >> indexPisica;
+			cout << endl;
+
+			if (listaPensionari[indexPensionar]->poateAdoptaPensionarul(*listaPisici[indexPisica]) == true)
+				cout << " Pensionarul poate adopta pisica\n";
+			else
+				cout << " Pensionarul nu poate adopta aceasta pisica\n";
+
+			break;
+		}
+
+		case 16:
+		{
+			for (int i = 0; i < indexListaPensionari; i++)
+			{
+				cout << "Index pensionar: " << i << endl;
+				cout << *listaPensionari[i] << endl;
+			}
+
+			for (int i = 0; i < indexListaCaini; i++)
+			{
+				cout << "Index caine: " << i << endl;
+				cout << *listaCaini[i] << endl;
+			}
+
+			int indexPensionar;
+			cout << "Indexul pensionarului dorit: ";
+			cin >> indexPensionar;
+
+			int indexCaine;
+			cout << "Indexul cainelui dorit: ";
+			cin >> indexCaine;
+			cout << endl;
+
+			if (listaPensionari[indexPensionar]->poateAdoptaPensionarul(*listaPisici[indexCaine]) == true)
+				cout << " Pensionarul poate adopta cainele\n";
+			else
+				cout << " Pensionarul nu poate adopta acest caine\n";
+
+			break;
+		}
+		
+		case 17:
+		{
+			for (int i = 0; i < indexListaHranaUscata; i++)
+			{
+				cout << "Index hrana uscata: " << i << endl;
+				cout << *listaHranaUscata[i] << endl;
+			}
+
+			int indexHranaUscata;
+			cout << "Indexul hranii uscate dorite: ";
+			cin >> indexHranaUscata;
+			cout << endl;
+
+			cout << "Discountul oferit pentru aceasta hrana uscata este de "
+				<< listaHranaUscata[indexHranaUscata]->calculeazaDiscountHranaUscata() << " lei" << endl;
+			break;
+		}
+
+		case 18:
+		{
+			for (int i = 0; i < indexListaHranaUmeda; i++)
+			{
+				cout << "Index hrana umeda: " << i << endl;
+				cout << *listaHranaUmeda[i] << endl;
+			}
+
+			int indexHranaUmeda;
+			cout << "Indexul hranii umede dorite: ";
+			cin >> indexHranaUmeda;
+			cout << endl;
+
+			cout << "Discountul oferit pentru aceasta hrana umeda este de "
+				<< listaHranaUmeda[indexHranaUmeda]->calculeazaDiscountHranaUmeda() << " lei" << endl;
+			break;
+		}
+
+		case 19:
+		{
+			for (int i = 0; i < indexListaPisici; i++)
+			{
+				cout << "Index pisica: " << i << endl;
+				cout << *listaPisici[i] << endl;
+			}
+
+			int indexPisica;
+			cout << "Indexul pisicii dorite: ";
+			cin >> indexPisica;
+			cout << endl;
+
+
+			bool copieAreProblemeSpeciale = listaPisici[indexPisica]->getAreProblemeSpeciale();
+
+			if (copieAreProblemeSpeciale == false && listaPisici[indexPisica]->verificaObezitate() == false)
+				cout << " Pisica nu are nicio problema speciala\n";
+			else
+				if (copieAreProblemeSpeciale == true && listaPisici[indexPisica]->verificaObezitate() == false)
+					cout << " Pisica nu are probleme cu obezitatea, dar are alte probleme speciale\n";
+				else
+					cout << " Pisica are probleme cu obezitatea\n";
+			break;
+		}
+
+		case 20:
+		{
+			for (int i = 0; i < indexListaCaini; i++)
+			{
+				cout << "Index caine: " << i << endl;
+				cout << *listaCaini[i] << endl;
+			}
+
+			int indexCaine;
+			cout << "Indexul cainelui dorit: ";
+			cin >> indexCaine;
+			cout << endl;
+
+
+			bool copieAreProblemeSpeciale = listaCaini[indexCaine]->getAreProblemeSpeciale();
+
+			if (copieAreProblemeSpeciale == false && listaCaini[indexCaine]->verificaObezitate() == false)
+				cout << " Cainele nu are nicio problema speciala\n";
+			else
+				if (copieAreProblemeSpeciale == true && listaCaini[indexCaine]->verificaObezitate() == false)
+					cout << " Cainele nu are probleme cu obezitatea, dar are alte probleme speciale\n";
+				else
+					cout << " Cainele are probleme cu obezitatea\n";
+			break;
+		}
+
+		default:
+			cout << "Optiunea nu exista! " << endl;
+			break;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	/*MixHrana h1;
 	cin >> h1;
-	cout << h1;
+	cout << h1;*/
 	/*Hrana h("BritCare",35,"pisica", true);
 	cout << h.calculeazaDiscount();*/
 
@@ -1342,10 +1608,10 @@ int main()
 	cout << hum3.calculeazaDiscount();
 	cout << endl;
 	cout << hum3.Hrana::calculeazaDiscount();*/
-	const Client c;
+	/*const Client c;
 	Pisica p("Piscotel", 'M', 1, 2.7, 355, false, true);
 
-	cout<<c.poateAdopta(p);
+	cout<<c.poateAdopta(p);*/
 
 	/*Pensionar p;
 	Adult a;
