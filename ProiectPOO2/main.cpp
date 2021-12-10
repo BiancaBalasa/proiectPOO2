@@ -5,7 +5,7 @@ using namespace std;
 
 class Hrana
 {
-private:
+protected:
 	string nume;
 	double pret;
 	string tipAnimal;
@@ -46,7 +46,7 @@ public:
 	~Hrana();
 
 	//function
-	double calculeazaDiscount();
+	double calculeazaDiscountHrana();
 
 };
 
@@ -123,7 +123,7 @@ Hrana::~Hrana()
 }
 
 //function
-double Hrana::calculeazaDiscount()
+double Hrana::calculeazaDiscountHrana()
 {
 	double discount = 0;
 	if (this->estePtProblemeSpeciale == true)
@@ -131,9 +131,9 @@ double Hrana::calculeazaDiscount()
 	return discount;
 }
 
-class HranaUscata :public Hrana
+class HranaUscata : virtual public Hrana
 {
-private:
+protected:
 	int grame;
 
 public:
@@ -165,7 +165,7 @@ public:
 	~HranaUscata();
 
 	//function
-	double calculeazaDiscount();
+	double calculeazaDiscountHranaUscata();
 };
 
 //constructor fara parametrii
@@ -224,26 +224,26 @@ HranaUscata::~HranaUscata()
 }
 
 //function: 
-double HranaUscata::calculeazaDiscount()
+double HranaUscata::calculeazaDiscountHranaUscata()
 {
 	double discountTotal = 0; // se calculeaza la totalul de grame, NU pe suta de grame
 	
 	if (this->grame >= 500 && this->grame < 1500)
-		discountTotal = 15 * 0.01 * this->getPret();
+		discountTotal = 15 * 0.01 * this->pret;
 	else
 		if (this->grame >= 1500)
-			discountTotal = 25 * 0.01 * this->getPret();
+			discountTotal = 25 * 0.01 * this->pret;
 	
-	if (((Hrana)*this).calculeazaDiscount() == 0)
+	if (((Hrana)*this).calculeazaDiscountHrana() == 0)
 		return discountTotal;
 	else
-		return discountTotal + ((Hrana)*this).calculeazaDiscount();
+		return discountTotal + ((Hrana)*this).calculeazaDiscountHrana();
 	
 }
 
-class HranaUmeda : public Hrana
+class HranaUmeda : virtual public Hrana
 {
-private:
+protected:
 	int nrPlicuri;
 
 public:
@@ -275,7 +275,7 @@ public:
 	~HranaUmeda();
 
 	//function
-	double calculeazaDiscount();
+	double calculeazaDiscountHranaUmeda();
 };
 
 //constructor fara parametrii
@@ -334,28 +334,151 @@ HranaUmeda::~HranaUmeda()
 }
 
 //function
-double HranaUmeda::calculeazaDiscount()
+double HranaUmeda::calculeazaDiscountHranaUmeda()
 {
 	double discountPerPlic = 0; 
 	double discountTotal = 0;
 
 	if (this->nrPlicuri >= 15 && this->nrPlicuri < 35)
-		discountPerPlic = 10 * 0.01 * this->getPret();
+		discountPerPlic = 10 * 0.01 * this->pret;
 	else
 		if (this->nrPlicuri >= 35)
-			discountPerPlic = 20 * 0.01 * this->getPret();
+			discountPerPlic = 20 * 0.01 * this->pret;
 
 	discountTotal = discountPerPlic * this->nrPlicuri;
 
-	if (((Hrana)*this).calculeazaDiscount() == 0)
+	if (((Hrana)*this).calculeazaDiscountHrana() == 0)
 		return discountTotal;
 	else
-		return discountTotal + ((Hrana)*this).calculeazaDiscount();
+		return discountTotal + ((Hrana)*this).calculeazaDiscountHrana();
 }
+
+class MixHrana :public HranaUscata, public HranaUmeda
+{
+private:
+	double concentratieUscata;
+	double concentratieUmeda;
+
+public:
+	//setters
+	void setConcentratieUscata(double concentratieUscata) { this->concentratieUscata = concentratieUscata; }
+	void setConcentratieUmeda(double concentratieUmeda) { this->concentratieUmeda = concentratieUmeda; }
+
+	//getters
+	double getConcentratieUscata() { return this->concentratieUscata; }
+	double getConcentratieUmeda() { return this->concentratieUmeda; }
+
+	//contructor fara parametrii
+	MixHrana();
+
+	//constructor cu toti parametrii
+	MixHrana(string nume, double pret, string tipAnimal, bool estePtProblemeSpeciale, int grame, int nrPlicuri, double concentratieUscata, double concentratieUmeda);
+
+	//copy constructor
+	MixHrana(const MixHrana& other);
+
+	//overload operator=
+	MixHrana& operator=(const MixHrana& other);
+
+	//overload operator<<
+	friend ostream& operator<<(ostream& out, const MixHrana& mh);
+
+	//overload operator>>
+	friend istream& operator>>(istream& in, MixHrana& mh);
+
+	//destructor
+	~MixHrana();
+
+	//function
+	int CalculeazaGramaj();
+	//calculeaza gramaj total al mixturi: grame + 85 * nr.plicuri
+
+};
+
+//constructor fara parametrii
+MixHrana::MixHrana() :HranaUscata(), HranaUmeda()
+{
+	this->concentratieUscata = 0;
+	this->concentratieUmeda = 0;
+}
+
+//constructor cu toti parametrii
+MixHrana::MixHrana(string nume, double pret, string tipAnimal, bool estePtProblemeSpeciale, int grame, int nrPlicuri, double concentratieUscata, double concentratieUmeda)
+	: Hrana(nume, pret, tipAnimal, estePtProblemeSpeciale), HranaUscata(nume, pret, tipAnimal, estePtProblemeSpeciale, grame),
+	HranaUmeda(nume, pret, tipAnimal, estePtProblemeSpeciale, nrPlicuri)
+{
+	this->concentratieUscata = concentratieUscata;
+	this->concentratieUmeda = concentratieUmeda;
+}
+
+//copy constructor
+MixHrana::MixHrana(const MixHrana& other) : Hrana(other), HranaUscata(other), HranaUmeda(other)
+{
+	this->concentratieUscata = other.concentratieUscata;
+	this->concentratieUmeda = other.concentratieUmeda;
+}
+
+//overload operator=
+MixHrana& MixHrana::operator=(const MixHrana& other)
+{
+	if (this != &other)
+	{
+		Hrana::operator=(other);
+		this->grame = other.grame;
+		this->nrPlicuri = other.nrPlicuri;
+		this->concentratieUscata = other.concentratieUscata;
+		this->concentratieUmeda = other.concentratieUmeda;
+
+	}
+	return *this;
+}
+
+//overload operator<<
+ostream& operator<<(ostream& out, const MixHrana& mh)
+{
+	out << (const Hrana&)mh;
+	out << "\nGrame: " << mh.grame;
+	out << "\nNr Plicuri: " << mh.nrPlicuri;
+	out << "\nConcentratie Uscata: " << mh.concentratieUscata;
+	out << "\nConcentratie Umeda: " << mh.concentratieUmeda;
+	out << endl;
+	return out;
+}
+
+//overload operator>>
+istream& operator>>(istream& in, MixHrana& mh)
+{
+	in >> (Hrana&)mh;
+	cout << "\nGrame: ";
+	in >> mh.grame;
+	cout << "\nNr Plicuri: ";
+	in >> mh.nrPlicuri;
+	cout << "\nConcentratie Uscata: ";
+	in >> mh.concentratieUscata;
+	cout << "\nConcentratie Umeda: ";
+	in >> mh.concentratieUmeda;
+	cout << endl;
+	return in;
+}
+
+//destructor
+MixHrana::~MixHrana()
+{
+	cout << "\nDistruge MixHrana " << endl;
+}
+
+//function
+int MixHrana::CalculeazaGramaj()
+{
+	int gramajTotal = 0;
+	gramajTotal = this->grame + this->nrPlicuri * 85;
+	return gramajTotal;
+}
+
 
 class Animal
 {
-private:
+protected:
 	string nume;
 	char sex;
 	int varsta;
@@ -587,23 +710,23 @@ Pisica::~Pisica()
 }
 
 //function 
-bool Pisica::verificaObezitate()
+bool Pisica::verificaObezitate() 
 {
 	bool obezitatePisica = false;
 	int criteriuObezitatePisica;
-	if (this->getVarsta() < 2)
+	if (this->varsta < 2)
 		criteriuObezitatePisica = 7;
 	else
 	{
-		if (this->getVarsta() >= 2 && this->getVarsta() <= 10)
+		if (this->varsta >= 2 && this->varsta <= 10)
 			criteriuObezitatePisica = 12;
 		else
 			criteriuObezitatePisica = 10;
 	}
 
-	if (this->getGreutate() >= criteriuObezitatePisica)
+	if (this->greutate >= criteriuObezitatePisica)
 	{
-		this->setAreProblemeSpeciale(true);
+		this->areProblemeSpeciale = true;
 		obezitatePisica  = true;
 	}
 
@@ -706,19 +829,19 @@ bool Caine::verificaObezitate()
 {
 	bool obezitateCaine = false;
 	int criteriuObezitateCaine;
-	if (this->getVarsta() < 2)
+	if (this->varsta < 2)
 		criteriuObezitateCaine = 25;
 	else
 	{
-		if (this->getVarsta() >= 2 && this->getVarsta() <= 10)
+		if (this->varsta >= 2 && this->varsta <= 10)
 			criteriuObezitateCaine = 35;
 		else
 			criteriuObezitateCaine = 30;
 	}
 
-	if (this->getGreutate() >= criteriuObezitateCaine)
+	if (this->greutate >= criteriuObezitateCaine)
 	{
-		this->setAreProblemeSpeciale(true);
+		this->areProblemeSpeciale = true;
 		obezitateCaine = true;
 	}
 
@@ -821,19 +944,19 @@ bool Cal::verificaObezitate()
 {
 	bool obezitateCal = false;
 	int criteriuObezitateCal;
-	if (this->getVarsta() < 2)
+	if (this->varsta < 2)
 		criteriuObezitateCal = 150;
 	else
 	{
-		if (this->getVarsta() >= 2 && this->getVarsta() <= 10)
+		if (this->varsta >= 2 && this->varsta <= 10)
 			criteriuObezitateCal = 500;
 		else
 			criteriuObezitateCal = 450;
 	}
 
-	if (this->getGreutate() >= criteriuObezitateCal)
+	if (this->greutate >= criteriuObezitateCal)
 	{
-		this->setAreProblemeSpeciale(true);
+		this->areProblemeSpeciale = true;
 		obezitateCal = true;
 	}
 
@@ -842,7 +965,7 @@ bool Cal::verificaObezitate()
 
 class Client
 {
-private:
+protected:
 	string numePrenume;
 	char sex;
 	double rating;
@@ -883,7 +1006,7 @@ public:
 	~Client();
 
 	//function 
-	bool poateAdopta(Animal& a);
+	bool poateAdopta(Animal& a) const;
 };
 
 //constructor fara parametrii
@@ -958,7 +1081,7 @@ Client::~Client()
 }
 
 //function 
-bool Client::poateAdopta(Animal& a)
+bool Client::poateAdopta(Animal& a) const
 {
 	bool poateAdopta = true;
 
@@ -1195,27 +1318,11 @@ bool Pensionar::poateAdoptaPensionarul(Animal& a)
 		return false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main()
 {
+	MixHrana h1;
+	cin >> h1;
+	cout << h1;
 	/*Hrana h("BritCare",35,"pisica", true);
 	cout << h.calculeazaDiscount();*/
 
@@ -1235,22 +1342,18 @@ int main()
 	cout << hum3.calculeazaDiscount();
 	cout << endl;
 	cout << hum3.Hrana::calculeazaDiscount();*/
-	/*Client c;
-	Pisica p;
+	const Client c;
+	Pisica p("Piscotel", 'M', 1, 2.7, 355, false, true);
 
-	cout<<c.poateAdopta(p);*/
+	cout<<c.poateAdopta(p);
 
-	Pensionar p;
+	/*Pensionar p;
 	Adult a;
 	Pisica pi("Piscotel", 'M', 1, 2.7, 355, false, true);
 	cout << p.poateAdoptaPensionarul(pi);
 	cout << endl;
 	cout << a.poateAdoptaAdultul(pi);
 	cout << endl;
-	cout << p.poateAdopta(pi);
+	cout << p.poateAdopta(pi);*/
 
-
-
-
-	
 }
