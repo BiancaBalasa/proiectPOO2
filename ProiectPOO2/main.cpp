@@ -1575,51 +1575,5 @@ int main()
 		}
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-	/*MixHrana h1;
-	cin >> h1;
-	cout << h1;*/
-	/*Hrana h("BritCare",35,"pisica", true);
-	cout << h.calculeazaDiscount();*/
-
-	//HranaUscata hu("BritCare",2.66,"pisica",false,300);
-	////cout << hu;
-	////cout << endl;
-	//HranaUscata hu1;
-	//hu1 = hu;
-	//cout << hu1;
-	
-	//HranaUscata hu2("BritCare", 2.66, "pisica", true, 600);
-	//cout <<hu2.calculeazaDiscount();
-	//cout << endl;
-	//cout <<((Hrana) hu2).calculeazaDiscount();  // cout << hu2.Hrana::calculeazaDiscount();
-
-	/*HranaUmeda hum3("Pedigree", 1.99, "caine", true, 35);
-	cout << hum3.calculeazaDiscount();
-	cout << endl;
-	cout << hum3.Hrana::calculeazaDiscount();*/
-	/*const Client c;
-	Pisica p("Piscotel", 'M', 1, 2.7, 355, false, true);
-
-	cout<<c.poateAdopta(p);*/
-
-	/*Pensionar p;
-	Adult a;
-	Pisica pi("Piscotel", 'M', 1, 2.7, 355, false, true);
-	cout << p.poateAdoptaPensionarul(pi);
-	cout << endl;
-	cout << a.poateAdoptaAdultul(pi);
-	cout << endl;
-	cout << p.poateAdopta(pi);*/
-
+	return 0;
 }
